@@ -22,7 +22,7 @@ public class CheckDelimiterBalance {
 
   public static boolean checkDelimiterBalance(String s) {
 
-    
+
 /*
 ((( )(( )){([( )])}))
  */
@@ -81,16 +81,16 @@ public class CheckDelimiterBalance {
 
       //start of ignored String section  if not already in Comment section
 
-      if ((ch == '\'' || ch == '"') && (ignoreString == false && ignoreComment == false)) {
+      if ((ch == '\'' || ch == '"') && (!ignoreString && !ignoreComment)) {
         ignoreString = true;
       }
       //ignore String will only be true if not in a comment
-      else if ((ch == '\'' || ch == '"') && ignoreString == true) {
+      else if ((ch == '\'' || ch == '"') && ignoreString) {
         ignoreString = false;
       }
 
       // start of ignored Comment section if not in String section
-      else if (ch == '/' && (ignoreComment == false && ignoreString == false)) {
+      else if (ch == '/' && (!ignoreComment && !ignoreString)) {
 
         if (src.charAt(i + 1) == '/' || src.charAt(i + 1) == '*') {
           ignoreComment = true; //set it to true
@@ -99,13 +99,13 @@ public class CheckDelimiterBalance {
       }
 
       //found end of comment
-      else if (ignoreString == false && ((ch == '\n' || (ch == '*' && src.charAt(i + 1) == '/'))
-                                         && ignoreComment == true)) {
+      else if (!ignoreString && ((ch == '\n' || (ch == '*' && src.charAt(i + 1) == '/'))
+                                         && ignoreComment)) {
         ignoreComment = false;
       }
 
       //test the char if we are not in a String or Comment
-      if (ignoreString == false && ignoreComment == false) {
+      if (!ignoreString && !ignoreComment) {
 
         if (ch == LEFT_PAREN) {
           stack.push(LEFT_PAREN);
